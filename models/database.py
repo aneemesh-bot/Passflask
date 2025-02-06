@@ -22,7 +22,9 @@ def get_db_connection() -> MySQLConnection:
             host=MYSQL_HOST,
             user=MYSQL_USER,
             password=MYSQL_PASSWORD,
-            database=MYSQL_DATABASE
+            database=MYSQL_DATABASE,
+            charset='utf8mb4',
+            collation='utf8mb4_general_ci'
         )
         return conn
     except Error as e:
