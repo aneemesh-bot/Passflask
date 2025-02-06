@@ -2,7 +2,7 @@
 
 from flask import Flask, request, jsonify, Response
 from typing import Dict, Any, Optional, List, Tuple
-from datetime import datetime
+from datetime import datetime, timezone
 import jwt
 
 # Import functions from the service modules.
@@ -37,7 +37,8 @@ def generate() -> Response:
     # Generate the database key and the user ID hash.
     db_key: str = generate_db_key(username, password)
     uid_hash: str = generate_uid_hash(username)
-    generation_date: str = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+    # Use timezone-aware datetime for generation_date.
+    generation_date: str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
     # Upload the record to the database.
     execute_query(
@@ -48,7 +49,6 @@ def generate() -> Response:
     # Generate a JWT token.
     token: str = jwt_gen(username)
     return jsonify({"generated_password": password, "token": token})
-
 
 @app.route("/retrieve", methods=["GET"])
 def retrieve() -> Response:
@@ -92,7 +92,6 @@ def retrieve() -> Response:
     new_token: str = jwt_gen(username)
     return jsonify({"new_token": new_token})
 
-
 if __name__ == "__main__":
-    # Note: Remove or set debug=False for production deployments.
+    # For production, set debug=False or remove it.
     app.run(debug=True)
