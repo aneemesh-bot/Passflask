@@ -26,11 +26,11 @@ def test_jwt_gen_and_decode() -> None:
     token: str = jwt_gen(username)
     payload: Dict[str, Any] = decode_jwt(token)
     uid_hash: str = generate_uid_hash(username)
-    # Check that the subject matches the hashed username.
+    # Does subject match the hashed uid?
     assert payload["sub"] == uid_hash
-    # Verify the expiration time is roughly 24 hours from token generation.
+    # Expiration time check with timezone-aware object
     exp = datetime.fromisoformat(payload["exp"])
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     diff = exp - now
     assert diff > timedelta(hours=23)
 

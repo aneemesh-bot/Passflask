@@ -21,3 +21,9 @@ def test_check_leaks_negative(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -
     leaked_file.write_text("leakedPass\nanotherLeakedPass")
     monkeypatch.setattr("builtins.open", lambda filename, mode: open(leaked_file, mode))
     assert check_leaks("safePassword") is False
+
+'''
+monkeypatch is a pytest fixture that allows you to replace functions or modules with our own
+implementations. In this case, we're replacing the open function with a mock object that
+simulates the file opening behavior.
+'''

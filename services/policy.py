@@ -17,7 +17,7 @@ PASSWORD_POLICY: PolicyType = {
     "exclude_similar": True,
 }
 
-# Characters that should be excluded if the policy demands.
+# Exclusion list
 SIMILAR_CHARACTERS: Set[str] = {"O", "0", "l", "1", "I"}
 
 def generate_password() -> str:
@@ -42,6 +42,6 @@ def generate_password() -> str:
     if PASSWORD_POLICY["exclude_similar"]:
         char_pool.difference_update(SIMILAR_CHARACTERS)
 
-    # Convert the set to a list for indexing.
+    # Set[] to list[] for hashability
     pool_list: list[str] = list(char_pool)
     return ''.join(secrets.choice(pool_list) for _ in range(PASSWORD_POLICY["length"]))

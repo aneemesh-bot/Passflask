@@ -13,7 +13,7 @@ def client() -> Any:
     with app.test_client() as client:
         yield client
 
-# ----- Tests for the /generate endpoint -----
+# ----- Tests for /generate -----
 
 @patch("services.leaks.check_leaks", return_value=False)
 @patch("models.database.execute_query")
@@ -58,7 +58,7 @@ def test_generate_no_json(client: Any) -> None:
     assert response.status_code == 400
     assert "error" in data
 
-# ----- Tests for the /retrieve endpoint -----
+# ----- Tests for /retrieve -----
 
 @patch("models.database.execute_query")
 @patch("services.auth.decode_jwt")
@@ -74,9 +74,9 @@ def test_retrieve_valid(
     """
     Test that a valid GET request to /retrieve returns a new JWT token.
     """
-    # Simulate the database returning that the user exists.
+    # Simulate the database returning that a user with the given username exists
     mock_execute_query.return_value = [(1,)]
-    # Simulate a valid token payload.
+    # Simulate a valid JWT
     mock_decode_jwt.return_value = {
         "sub": "hashed_testuser",
         "ist": "2025-01-20T10:00:00",

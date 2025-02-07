@@ -5,7 +5,6 @@ from typing import Dict, Any, Optional, List, Tuple
 from datetime import datetime, timezone
 import jwt
 
-# Import functions from the service modules.
 from services.policy import generate_password
 from services.leaks import check_leaks
 from services.auth import generate_db_key, generate_uid_hash, jwt_gen, decode_jwt
@@ -30,23 +29,22 @@ def generate() -> Response:
     username: str = data["username"]
     password: str = generate_password()
 
-    # Ensure the generated password is not leaked.
+    # Password leak check
     while check_leaks(password):
         password = generate_password()
 
-    # Generate the database key and the user ID hash.
+    # Database storage preparation
     db_key: str = generate_db_key(username, password)
     uid_hash: str = generate_uid_hash(username)
-    # Use timezone-aware datetime for generation_date.
+    # timezone-aware datetime for the generation date
     generation_date: str = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
-    # Upload the record to the database.
     execute_query(
         "INSERT INTO users (db_key, uid_hash, generation_date) VALUES (%s, %s, %s)",
         (db_key, uid_hash, generation_date)
     )
 
-    # Generate a JWT token.
+    # JWT token generation
     token: str = jwt_gen(username)
     return jsonify({"generated_password": password, "token": token})
 
@@ -71,11 +69,10 @@ def retrieve() -> Response:
 
     uid_hash: str = generate_uid_hash(username)
     
-    # Execute a query to check whether the user exists.
+    # Check user existence
     result: Optional[List[Tuple[Any, ...]]] = execute_query(
         "SELECT COUNT(*) FROM users WHERE uid_hash = %s", (uid_hash,)
     )
-    # If no record is found, return a 404 error.
     if not result or result[0][0] == 0:
         return jsonify({"error": "Invalid username"}), 404
 
@@ -88,10 +85,9 @@ def retrieve() -> Response:
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid token"}), 401
 
-    # Generate a new JWT token.
+    # Generate new JWT token
     new_token: str = jwt_gen(username)
     return jsonify({"new_token": new_token})
 
 if __name__ == "__main__":
-    # For production, set debug=False or remove it.
     app.run(debug=True)

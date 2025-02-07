@@ -53,7 +53,9 @@ def execute_query(
     cursor = conn.cursor()
     try:
         cursor.execute(query, params)
-        # If the query is a SELECT query, return the fetched results.
+        # If the query is a SELECT query return the results
+        # possible vulnerability here
+        # any way to parametrize the query?
         if query.strip().lower().startswith("select"):
             results: List[Tuple[Any, ...]] = cursor.fetchall()
             return results
