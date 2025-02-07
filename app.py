@@ -29,7 +29,7 @@ def generate() -> Response:
     username: str = data["username"]
     password: str = generate_password()
 
-    # Password leak check
+    # Password leak check with HaveIBeenPwned API
     while check_leaks(password):
         password = generate_password()
 
