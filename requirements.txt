@@ -2,3 +2,5 @@ Flask
 python-dotenv
 PyJWT
 mysql-connector-python
+requests
+pytest
