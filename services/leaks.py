@@ -22,7 +22,7 @@ def check_leaks(password: str) -> bool:
     Raises:
         Exception: If the API request fails.
     """
-    # Compute the SHA1 hash and convert it to uppercase.
+    # Compute the SHA1 hash and convert it to uppercase for uniformity.
     sha1pwd: str = hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
     prefix: str = sha1pwd[:5]
     suffix: str = sha1pwd[5:]
