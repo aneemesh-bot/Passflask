@@ -1,4 +1,4 @@
-# Password Management System
+# Password Authentication Management System
 
 ## Usage instructions
 
