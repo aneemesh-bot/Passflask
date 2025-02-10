@@ -89,47 +89,6 @@ For a Password Management System, we describe the requirements in various forms.
 
   Confidentiality and integrity compromised.
 
-## Visual representations of the system's use
-
-### Actors in the system
-
-- Corporate user with nominal privileges
-- Identity and Access Management admin
-- Attacker
-
-
-
-### Attack tree
-
-![](/home/aneemesh/Downloads/HSO study material/Attack Tree Software Security.drawio.png)
-
-
-
-### Use Case Diagram
-
-![](/home/aneemesh/Downloads/HSO study material/SoftwareSecurity_UseCase diagram final.png)
-
-### Abuse Case diagram
-
-![](/home/aneemesh/Downloads/HSO study material/SoftwareSecurity_AbuseCase diagram.drawio.png)
-
-## Threat model with IriusRisk
-
-![](/home/aneemesh/Downloads/HSO study material/C3/IriusRisk model.png)
-
-## C-level abstraction diagrams
-
-### C1
-
-![C1.drawio](/home/aneemesh/Downloads/HSO study material/C3/C1.drawio.png)
-
-### C2
-
-![real c2.drawio](/home/aneemesh/Downloads/HSO study material/C3/real c2.drawio.png)
-
-## Dataflow diagram
-
-![](/home/aneemesh/Downloads/HSO study material/C3/dfd.drawio.png)
 
 ## Test Cases
 
@@ -584,7 +543,3 @@ Files skipped (0):
 ### Sonarqube
 
 The analysis revealed numerous potential vulnerabilities and security suggestions. While an exportable form was not available, the platform's self-hosted web interface provides a server connector and analytics.
-
-![image-20250121001259873](/home/aneemesh/.config/Typora/typora-user-images/image-20250121001259873.png)
-
-Even with this result, static code analysis is just one part of the picture.
